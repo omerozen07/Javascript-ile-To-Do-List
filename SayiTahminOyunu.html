@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="sayiTahmin">
+        <input type="text" id="sayi">
+        <button id="tahminEt">Tahmin Et</button>
+        <button id="yeniOyun">Yeni Oyun</button>
+        <p id="sonuc"></p>
+    </div>
+
+    <style>
+        #sayiTahmin {
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input,
+        button {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #tahminEt {
+            background-color: green;
+        }
+
+        #yeniOyun {
+            background-color: rgb(64, 64, 189);
+        }
+    </style>
+
+    <script>
+        /// ilk olarak gerekli degiskenleri secelim ve html nesnelerini olusturalım
+        "use strict";
+        let hakSayisi = 0;
+        let rastgeleSayi = 0;
+        let _tahminEt = document.querySelector('#tahminEt')
+        let _yeniOyun = document.querySelector('#yeniOyun')
+        let _sonuc = document.querySelector('#sonuc')
+        let _sayi = document.querySelector('#sayi')
+
+        _tahminEt.onclick = tahmin;
+        _yeniOyun.onclick = yeni;
+       
+        /// Oyun baslatma fonksiyoununu yazalım
+        function randomInt(min, max){
+            return Math.floor(Math.random()*(max-min +1) + min);
+        }
+        function yeni(){
+            rastgeleSayi = randomInt(0,99);
+            hakSayisi = 10;
+            _sonuc.innerHTML = "";
+            _sayi.value = "";
+            _tahminEt.disabled = false;
+            _yeniOyun.disabled = true;
+        }
+        ///// Son olarak tahmin fonksiyonunu yazalım
+        function tahmin(){
+            if(hakSayisi == 0) return;
+            let girilenSayi  = parseInt(_sayi.value)
+            let mesaj = "";
+            if(isNaN(girilenSayi)){
+                 mesaj = "Lütfen sayi giriniz";
+            }else if(rastgeleSayi > girilenSayi){
+                mesaj = "Daha buyuk sayi deneyin";
+            }else if (girilenSayi > rastgeleSayi){
+                mesaj = "Daha kucuk sayi deneyin";
+            }else {
+                mesaj = "Tebrikler";
+                _tahminEt.disabled = true;
+                _yeniOyun.disabled = false;
+            }
+            hakSayisi --;
+            _sonuc.innerHTML = mesaj + "<br>";
+            // _sonuc.innerHTML += "<br>" 
+            _sonuc.innerHTML += "Kalan Hak Sayisi: " + hakSayisi;
+            if(hakSayisi == 0){
+                _tahminEt.disabled = true;
+                _yeniOyun.disabled = false;
+            } 
+        }
+
+
+
+    </script>
+</body>
+</html>
